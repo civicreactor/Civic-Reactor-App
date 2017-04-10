@@ -17,20 +17,15 @@ export class AccountPage {
   public birthDate: string;
 
   constructor(public alertCtrl: AlertController, public nav: NavController, public authData: AuthData, 
-              public userData: UserData, public af: AngularFire) {
-    // this.userData.getUserProfile().on('value', (data) => {
-    //   this.userProfile = data.val();
-    //   this.birthDate = this.userProfile.birthDate;
-    // });
-  }
+              public userData: UserData, public af: AngularFire) {}
 
-    ionViewDidEnter() {
+  ionViewDidEnter(){
     this.userData.getUserProfile().on('value', (data) => {
       this.userProfile = data.val();
       this.birthDate = this.userProfile.birthDate;
-
     });
   }
+
 
   updateName() {
     let alert = this.alertCtrl.create({

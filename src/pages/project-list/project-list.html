@@ -3,10 +3,67 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Projects</ion-title>
+
+    <ion-segment [(ngModel)]="segment" (ionChange)="updateProjects()" >
+      <ion-segment-button value="all">
+        Projects
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        Favorites
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="filterProjects()">
+        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-searchbar color="primary" [(ngModel)]="queryText" (ionInput)="updateProjects()" placeholder="Search">
+    </ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="outer-content project-list">
+  <ion-card #cardProject class="project-card" *ngFor="let project of projects | async">
+    <ion-card-header>
+      <button ion-item detail-none>
+        <ion-thumbnail item-left>
+          <img [src]="project.profilePic" alt="Project profile pic">
+        </ion-thumbnail>
+        <h2>CareHome App</h2>
+        <br>
+        <h4>Angular2, Pithon API, Docker, Heroku</h4>
+      </button>
+    </ion-card-header>
 
+    <ion-row no-padding>
+      <ion-col text-left>
+        <button ion-button clear small icon-left color="primary" *ngIf="segment === 'all'" 
+                (click)="addFavorite(project)">
+                <ion-icon name="star"></ion-icon>
+                Favorite
+        </button>
+        <button ion-button clear small icon-left color="primary" *ngIf="segment === 'favorites'" 
+                (click)="removeFavorite(project)">
+                <ion-icon name="star"></ion-icon>
+                Remove
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear small icon-left color="primary">
+          <ion-icon name="share-alt"></ion-icon>
+          Share
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small icon-left color="primary">
+          <ion-icon name="chatboxes"></ion-icon>
+          Contact
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>

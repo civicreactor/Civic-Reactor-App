@@ -14,6 +14,7 @@ import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { AuthData } from '../providers/auth-data';
+import { ProjectData } from '../providers/project-data';
 import { UserData } from '../providers/user-data';
 
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -60,6 +61,7 @@ export const myFirebaseAuthConfig = {
   ],
   providers: [
     AuthData,
+    ProjectData,
     SplashScreen,
     UserData,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
