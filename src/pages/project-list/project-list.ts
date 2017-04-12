@@ -8,56 +8,36 @@ import { ProjectData } from '../../providers/project-data';
   templateUrl: 'project-list.html'
 })
 export class ProjectListPage {
-  projects: any;
-
+  projects; favs: any;
+  segment: any;
+  placeholder: any;
+  queryText: any;
   constructor(public navCtrl: NavController, public projectData: ProjectData) {
+    this.segment = 'all';
+    this.queryText = '';
     this.projects = projectData.getProjects();
-    this.populateProjectNode();
+    this.favs = projectData.getFavorites();
   }
 
-  populateProjectNode() {
-    this.projectData.getProjects().push(
-      {
-        "name": "Civic Reactor Web App",
-        "profilePic": "assets/img/speakers/cheetah.jpg",
-        "twitter": "Civicreactor",
-        "about": "Civic Reactor = Crowdsourced Personal Development.",
-        "location": "London",
-        "email": "Civicreactor@gmail.com",
-        "phone": "+1-541-754-3010",
-        "desc": "",
-        "champ":"Spanarchian",
-        "tech": ["Ionic 2", "Python API",  "Docker", "AWS"]
-      }, {
-        "name": "Meals On Wheels",
-        "profilePic": "assets/img/speakers/duck.jpg",
-        "twitter": "ionicframework",
-        "about": "An app to help plan, route and deliver a community meal service!",
-        "location": "Everywhere",
-        "email": "donald@example.com",
-        "phone": "+1-541-754-3010",
-        "desc": "",
-        "champ":"Donald Duck",
-        "tech": ["Angular 2", "Python API",  "Docker", "Heroku"]
-      }
-    );
-    
+
+  updateProjects(s) {
+    if (s === 'favorites') {
+      console.log("favs"+this.favs[0])
+      return this.favs;
+    } else {
+      console.log("projs")
+      return this.projects;
+    }
+
   }
 
-  updateProjects() {
-
+  addProjectToFavorites(p) {
+    this.projectData.addFavoriteProject(p.$key);
   }
 
   filterProjects() {
 
   }
 
-  addFavorites(p) {
-
-  }
-
-  removeFavorites(p) {
-
-  }
 
 }

@@ -25,13 +25,6 @@ export class AuthData {
     return firebase.auth().sendPasswordResetEmail(email);
   }
 
-  // logoutUser() {
-  //   firebase.auth().signOut().then(function() {
-  //   }).catch(function(error) {
-  //     console.log(error);
-  //   });
-  // }
-
   logoutUser(): firebase.Promise<any> {
     return firebase.auth().signOut();
   }
