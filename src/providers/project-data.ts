@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-
+import { UserData } from './user-data';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import firebase from 'firebase';
 
@@ -8,9 +8,9 @@ export class ProjectData {
     projects: any;
     zone: NgZone;
     currentUser: string;
-    favorites: any;
+    favorites: any = [];
 
-    constructor(public af:AngularFire) {
+    constructor(public af:AngularFire, public userData:UserData) {
         this.zone = new NgZone({});
         af.auth.subscribe((user) => {
             this.zone.run(() => {
@@ -19,23 +19,24 @@ export class ProjectData {
                 }
             });     
         });
-        this.projects = af.database.list('/projects');
-        this.favorites = af.database.list('/userProfile/FyYlRh4hGvgvP9eukKG440N7FRF2/favorites');
     }
 
     getProjects() {
-        return this.projects;
+        return this.af.database.list('/projects');
     }
+
+     addFavoriteProject(projectKey: string) {
+        return firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(true);
+    }
+
+    // removeProjectFromFavorites(projectKey: string, key) {
+    //     let uid = this.currentUser;
+    //     return firebase.database().ref('/projects').child(projectKey + '/users/').remove(key);
+    // }
 
     getFavorites() {
-        return this.favorites;
-    }
-    
-    addFavoriteProject(projectKey: string) {
-        return firebase.database().ref('userProfile').child(this.currentUser + '/favorites/' + projectKey).set(true);
-    }
-
-    getFavoriteProjects() {
-        return firebase.database().ref('userProfile').child(this.currentUser + '/favorites/').once('value');
-    }
+        let uid = this.currentUser;
+        console.log(uid)
+        return this.af.database.list('/projects', {query: {orderByChild: `/users/${uid}`, equalTo: true}});
+    }   
 }

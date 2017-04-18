@@ -4,7 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-segment [(ngModel)]="segment" (ionChange)="updateProjects(segment)" >
+    <ion-segment [(ngModel)]="segment" (ionChange)="getProjects(segment)" >
       <ion-segment-button value="all">
         Projects
       </ion-segment-button>

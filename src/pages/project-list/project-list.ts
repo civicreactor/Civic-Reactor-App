@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-
+import { AlertController, NavController } from 'ionic-angular';
 import { ProjectData } from '../../providers/project-data';
 
 @Component({
@@ -12,32 +11,44 @@ export class ProjectListPage {
   segment: any;
   placeholder: any;
   queryText: any;
-  constructor(public navCtrl: NavController, public projectData: ProjectData) {
+  constructor(public alertCrl: AlertController, public navCtrl: NavController, public projectData: ProjectData) {
     this.segment = 'all';
     this.queryText = '';
     this.projects = projectData.getProjects();
-    this.favs = projectData.getFavorites();
   }
 
-
-  updateProjects(s) {
+  getProjects(s) {
     if (s === 'favorites') {
-      console.log("favs"+this.favs[0])
-      return this.favs;
+      this.projects = this.projectData.getFavorites();
     } else {
-      console.log("projs")
-      return this.projects;
+      this.projects = this.projectData.getProjects();
     }
-
   }
 
   addProjectToFavorites(p) {
     this.projectData.addFavoriteProject(p.$key);
+    let alert = this.alertCrl.create({
+      title: 'Favorite added',
+      buttons: [{
+        text: 'Ok'
+      }]
+    });
+    alert.present();
   }
+
+  // removeProjectFromFavorites(p) {
+  //   this.projectData.removeProjectFromFavorites(p.$key);
+  //   let alert = this.alertCrl.create({
+  //     title: 'Favorite removed',
+  //     buttons: [{
+  //       text: 'Ok'
+  //     }]
+  //   });
+  //   alert.present();
+  // }
 
   filterProjects() {
 
   }
-
 
 }
