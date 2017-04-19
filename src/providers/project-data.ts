@@ -29,14 +29,12 @@ export class ProjectData {
         return firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(true);
     }
 
-    // removeProjectFromFavorites(projectKey: string, key) {
-    //     let uid = this.currentUser;
-    //     return firebase.database().ref('/projects').child(projectKey + '/users/').remove(key);
-    // }
+    removeProjectFromFavorites(projectKey: string) {
+        return firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(false);
+    }
 
     getFavorites() {
         let uid = this.currentUser;
-        console.log(uid)
         return this.af.database.list('/projects', {query: {orderByChild: `/users/${uid}`, equalTo: true}});
     }   
 }

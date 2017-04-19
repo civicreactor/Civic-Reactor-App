@@ -36,16 +36,16 @@ export class ProjectListPage {
     alert.present();
   }
 
-  // removeProjectFromFavorites(p) {
-  //   this.projectData.removeProjectFromFavorites(p.$key);
-  //   let alert = this.alertCrl.create({
-  //     title: 'Favorite removed',
-  //     buttons: [{
-  //       text: 'Ok'
-  //     }]
-  //   });
-  //   alert.present();
-  // }
+  removeProjectFromFavorites(p) {
+    this.projectData.removeProjectFromFavorites(p.$key);
+    let alert = this.alertCrl.create({
+      title: 'Favorite removed',
+      buttons: [{
+        text: 'Ok'
+      }]
+    });
+    alert.present();
+  }
 
   filterProjects() {
 
