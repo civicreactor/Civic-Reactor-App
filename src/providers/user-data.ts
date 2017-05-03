@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 @Injectable()
 export class UserData {
     public userProfile: firebase.database.Reference;
     public currentUser: firebase.User;
 
-    constructor() {
+    constructor(public af: AngularFire) {
         this.currentUser = firebase.auth().currentUser;
         this.userProfile = firebase.database().ref('/userProfile');
+    }
+
+    getUsers() {
+        return this.af.database.list('/userProfile');
     }
 
     getUserProfile(): firebase.database.Reference {

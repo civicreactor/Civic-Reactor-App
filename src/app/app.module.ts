@@ -9,7 +9,9 @@ import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
+import { ProjectFilterPage } from '../pages/project-filter/project-filter';
 import { ProjectListPage } from '../pages/project-list/project-list';
+import { ReactorsPage } from '../pages/reactors/reactors';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -39,7 +41,9 @@ export const myFirebaseAuthConfig = {
     AccountPage,
     LoginPage,
     MapPage,
+    ProjectFilterPage,
     ProjectListPage,
+    ReactorsPage,
     SignupPage,
     TabsPage
   ],
@@ -55,7 +59,9 @@ export const myFirebaseAuthConfig = {
     AccountPage,
     LoginPage,
     MapPage,
+    ProjectFilterPage,
     ProjectListPage,
+    ReactorsPage,
     SignupPage,
     TabsPage
   ],

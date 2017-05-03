@@ -1,0 +1,18 @@
+
+.reset-filters {
+  color: color($colors, danger);
+}
+
+@each $tech, $value in auxiliary-categories() {
+
+  // ion-item[tech=#{$tech}] .dot {
+    ion-item .dot {
+    height: 10px;
+    display: inline-block;
+    width: 10px;
+    background-color: $value;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+}
