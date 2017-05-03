@@ -7,6 +7,7 @@ import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { ProjectListPage } from '../pages/project-list/project-list';
+import { ReactorsPage } from '../pages/reactors/reactors';
 import { SignupPage } from '../pages/signup/signup'
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -31,6 +32,7 @@ export class CivicReactorApp {
   @ViewChild(Nav) nav: Nav;
 
   appPages: PagesInterface[] = [
+    { title: 'Reactors', component: TabsPage, tabComponent: ReactorsPage, icon: 'filing' },
     { title: 'Projects', component: TabsPage, tabComponent: ProjectListPage, icon: 'filing' },
     { title: 'Map', component: TabsPage, tabComponent: MapPage, index: 1, icon: 'map'},
     { title: 'About', component: TabsPage, tabComponent: AboutPage, index: 2, icon: 'information-circle' }
