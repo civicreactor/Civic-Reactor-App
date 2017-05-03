@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, NgZone, ViewChild } from '@angular/core';
 import { AlertController, List, ModalController, NavController } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ProjectData } from '../../providers/project-data';
 import { ProjectFilterPage } from '../project-filter/project-filter';
 
@@ -15,9 +16,19 @@ export class ProjectListPage {
   placeholder: any;
   queryText: any;
   excludedTracks: any = [];
+  zone: NgZone;
+  currentUser: string;
 
-  constructor(public alertCtrl: AlertController, public modalCtrl: ModalController, public navCtrl: NavController, 
+  constructor(public af: AngularFire, public alertCtrl: AlertController, public modalCtrl: ModalController, public navCtrl: NavController, 
               public projectData: ProjectData) {
+    this.zone = new NgZone({});
+    af.auth.subscribe((user) => {
+        this.zone.run(() => {
+            if (user) {
+                this.currentUser = user.uid;
+            }
+        });     
+    });
     this.segment = 'all';
     this.queryText = '';
     this.projects = projectData.getProjects();
@@ -32,6 +43,7 @@ export class ProjectListPage {
   }
 
   addProjectToFavorites(p) {
+    console.log(this.currentUser)
     this.projectData.addFavoriteProject(p.$key);
     let alert = this.alertCtrl.create({
       title: 'Favorite added',
