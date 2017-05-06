@@ -27,12 +27,6 @@ export class UserData {
         });
     }
 
-    updateDOB(birthDate: string): firebase.Promise<any> {
-        return this.userProfile.child(this.currentUser.uid).update({
-            birthDate: birthDate,
-        });
-    }
-
     updateEmail(newEmail: string, password: string): firebase.Promise<any> {
         const credential = firebase.auth.EmailAuthProvider.credential(this.currentUser.email, password);
 

@@ -18,6 +18,8 @@ export class SignupPage {
   public loadingCtrl: LoadingController, public alertCtrl: AlertController) 
   {
     this.signupForm = formBuilder.group({
+      fName: [''],
+      lName: [''],
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });

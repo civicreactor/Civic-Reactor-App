@@ -14,7 +14,6 @@ import firebase from 'firebase';
 })
 export class AccountPage {
   public userProfile: any;
-  public birthDate: string;
 
   constructor(public alertCtrl: AlertController, public nav: NavController, public authData: AuthData, 
               public userData: UserData, public af: AngularFire) {}
@@ -22,7 +21,6 @@ export class AccountPage {
   ionViewDidEnter(){
     this.userData.getUserProfile().on('value', (data) => {
       this.userProfile = data.val();
-      this.birthDate = this.userProfile.birthDate;
     });
   }
 
@@ -55,10 +53,6 @@ export class AccountPage {
       ]
     });
     alert.present();
-  }
-
-  updateDOB(birthDate) {
-    this.userData.updateDOB(birthDate);
   }
 
   updateEmail() {

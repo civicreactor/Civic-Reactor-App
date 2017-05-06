@@ -32,10 +32,10 @@ export class CivicReactorApp {
   @ViewChild(Nav) nav: Nav;
 
   appPages: PagesInterface[] = [
-    { title: 'Reactors', component: TabsPage, tabComponent: ReactorsPage, icon: 'filing' },
-    { title: 'Projects', component: TabsPage, tabComponent: ProjectListPage, icon: 'filing' },
-    { title: 'Map', component: TabsPage, tabComponent: MapPage, index: 1, icon: 'map'},
-    { title: 'About', component: TabsPage, tabComponent: AboutPage, index: 2, icon: 'information-circle' }
+    { title: 'Reactors', component: TabsPage, tabComponent: ReactorsPage, icon: 'contacts' },
+    { title: 'Projects', component: TabsPage, tabComponent: ProjectListPage, index: 1, icon: 'filing' },
+    { title: 'Map', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map'},
+    { title: 'About', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
   ]
   loggedInPages: PagesInterface[] = [
     { title: 'Account', component: AccountPage, icon: 'person' },
