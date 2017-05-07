@@ -18,16 +18,33 @@
       Personal Information
     </ion-list-header>
 
-    <ion-item (click)="updateName()">
+    <ion-item (click)="updateFirstName()">
       <ion-grid>
         <ion-row>
           <ion-col width-50>
-            Name
+            First Name
           </ion-col>
-          <ion-col *ngIf="userProfile?.firstName || userProfile?.lastName">
-            {{userProfile?.firstName}} {{userProfile?.lastName}}
+          <ion-col *ngIf="userProfile?.firstName">
+            {{userProfile.firstName}}
           </ion-col>
           <ion-col class="placeholder-profile" *ngIf="!userProfile?.firstName">
+            <span>
+              Tap here to edit.
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item (click)="updateLastName()">
+      <ion-grid>
+        <ion-row>
+          <ion-col width-50>
+            Last Name
+          </ion-col>
+          <ion-col *ngIf="userProfile?.lastName">
+            {{userProfile.lastName}}
+          </ion-col>
+          <ion-col class="placeholder-profile" *ngIf="!userProfile?.lastName">
             <span>
               Tap here to edit.
             </span>
@@ -43,7 +60,7 @@
             Email
           </ion-col>
           <ion-col width-50 *ngIf="userProfile?.email">
-            {{userProfile?.email}}
+            {{userProfile.email}}
           </ion-col>
           <ion-col class="placeholder-profile" *ngIf="!userProfile?.email">
             <span>

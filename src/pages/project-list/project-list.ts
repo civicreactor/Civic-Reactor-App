@@ -36,33 +36,56 @@ export class ProjectListPage {
 
   getProjects(s) {
     if (s === 'favorites') {
-      this.projects = this.projectData.getFavorites();
+      if (this.currentUser) {
+        this.projects = this.projectData.getFavorites();
+      } else {
+        this.projects = '';
+      }
     } else {
       this.projects = this.projectData.getProjects();
     }
   }
 
   addProjectToFavorites(p) {
-    console.log(this.currentUser)
-    this.projectData.addFavoriteProject(p.$key);
-    let alert = this.alertCtrl.create({
-      title: 'Favorite added',
-      buttons: [{
-        text: 'Ok'
-      }]
-    });
-    alert.present();
+    if (this.currentUser){
+      this.projectData.addFavoriteProject(p.$key);
+      let alert = this.alertCtrl.create({
+        title: 'Favorite added',
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alert.present();
+    } else {
+      let alert = this.alertCtrl.create({
+        message: 'User must be logged in for adding Favorites.',
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alert.present();
+    }
   }
 
   removeProjectFromFavorites(p) {
-    this.projectData.removeProjectFromFavorites(p.$key);
-    let alert = this.alertCtrl.create({
-      title: 'Favorite removed',
-      buttons: [{
-        text: 'Ok'
-      }]
-    });
-    alert.present();
+    if (this.currentUser){
+      this.projectData.removeProjectFromFavorites(p.$key);
+      let alert = this.alertCtrl.create({
+        title: 'Favorite removed',
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alert.present();
+    } else {
+      let alert = this.alertCtrl.create({
+        message: 'User must be logged in for removing Favorites.',
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alert.present();
+    }
   }
 
   presentFilter() {

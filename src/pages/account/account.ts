@@ -24,20 +24,14 @@ export class AccountPage {
     });
   }
 
-
-  updateName() {
+  updateFirstName() {
     let alert = this.alertCtrl.create({
-      message: "Your first name and last name",
+      message: "Your first name",
       inputs: [
         {
           name: 'firstName',
           placeholder: 'Your first name',
           value: this.userProfile.firstName
-        },
-        {
-          name: 'lastName',
-          placeholder: 'Your last name',
-          value: this.userProfile.lastName
         },
       ],
       buttons: [
@@ -47,7 +41,32 @@ export class AccountPage {
         {
           text: 'Save',
           handler: data => {
-            this.userData.updateName(data.firstName, data.lastName);
+            this.userData.updateFirstName(data.firstName);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  updateLastName() {
+    let alert = this.alertCtrl.create({
+      message: "Your last name",
+      inputs: [
+        {
+          name: 'lastName',
+          placeholder: 'Your last name',
+          value: this.userProfile.lastName
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.userData.updateLastName(data.lastName);
           }
         }
       ]
