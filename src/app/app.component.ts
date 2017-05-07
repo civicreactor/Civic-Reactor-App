@@ -11,7 +11,7 @@ import { ReactorsPage } from '../pages/reactors/reactors';
 import { SignupPage } from '../pages/signup/signup'
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { AuthData } from '../providers/auth-data';
+import { AuthService } from '../providers/auth-service';
 
 import {AngularFire} from 'angularfire2';
 import firebase from 'firebase';
@@ -51,7 +51,7 @@ export class CivicReactorApp {
 
   constructor(
     public af: AngularFire,
-    public authData: AuthData,
+    public authService: AuthService,
     public menu: MenuController,
     public platform: Platform,
     splashScreen: SplashScreen
@@ -85,7 +85,7 @@ export class CivicReactorApp {
 
     if (page.logsOut === true) {
       setTimeout(() => {;
-        this.authData.logoutUser();
+        this.authService.logOut();
       }, 1000);
     }
   }

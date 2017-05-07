@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController } from 'ionic-angular';
 
-import { AuthData } from '../../providers/auth-data';
+import { AuthService } from '../../providers/auth-service';
 import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
 
@@ -15,7 +15,7 @@ import firebase from 'firebase';
 export class AccountPage {
   public userProfile: any;
 
-  constructor(public alertCtrl: AlertController, public nav: NavController, public authData: AuthData, 
+  constructor(public alertCtrl: AlertController, public nav: NavController, public authService: AuthService, 
               public userData: UserData, public af: AngularFire) {}
 
   ionViewDidEnter(){
@@ -113,7 +113,7 @@ export class AccountPage {
   }
 
   logoutUser() {
-    this.authData.logoutUser();
+    this.authService.logOut();
     this.nav.push(TabsPage);
   }
 

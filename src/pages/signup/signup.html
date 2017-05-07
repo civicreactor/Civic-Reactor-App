@@ -1,42 +1,40 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Create an Account</ion-title>
-  </ion-navbar>
+	<ion-toolbar>
+		<ion-title>Create New Account</ion-title>
+		<ion-buttons start>
+			<button ion-button (click)="dismiss()">Cancel</button>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-	<form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
-
-		<ion-item>
-			<ion-label stacked>First Name</ion-label>
-			<ion-input #fName formControlName="fName" type="text" placeholder="Your first name"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label stacked>Last Name</ion-label>
-			<ion-input #lName formControlName="lName" type="text" placeholder="Your last name"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label stacked>Email</ion-label>
-			<ion-input #email formControlName="email" type="email" placeholder="Your email address" 
-			[class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty"></ion-input>
-		</ion-item>
-		<ion-item class="error-message" *ngIf="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
-			<p>Please enter a valid email.</p>
-		</ion-item>
-		<ion-item>
-			<ion-label stacked>Password</ion-label>
-			<ion-input #password formControlName="password" type="password" placeholder="Your password"
-			[class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
-			</ion-input>
-		</ion-item>
-		<ion-item class="error-message" *ngIf="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
-			<p>Your password needs more than 6 characters.</p>
-		</ion-item>
-		<button ion-button block type="submit">
-			Create an Account
-		</button>
-	</form>
+  <form #signupForm="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>First Name</ion-label>
+        <ion-input type="text" [(ngModel)]="user.fName" name="fName"
+required></ion-input>
+      </ion-item>
+			<ion-item>
+        <ion-label floating>Last Name</ion-label>
+        <ion-input type="text" [(ngModel)]="user.lName" name="lName"
+required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" [(ngModel)]="user.email" name="email"
+required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password"
+name="password" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <button color="primary" ion-button large block round
+(click)="signUp()" [disabled]="!signupForm.form.valid">Sign up</button>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>
+

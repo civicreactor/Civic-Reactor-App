@@ -15,7 +15,7 @@ import { ReactorsPage } from '../pages/reactors/reactors';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { AuthData } from '../providers/auth-data';
+import { AuthService } from '../providers/auth-service';
 import { ProjectData } from '../providers/project-data';
 import { UserData } from '../providers/user-data';
 
@@ -66,7 +66,7 @@ export const myFirebaseAuthConfig = {
     TabsPage
   ],
   providers: [
-    AuthData,
+    AuthService,
     ProjectData,
     SplashScreen,
     UserData,

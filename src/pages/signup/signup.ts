@@ -1,52 +1,53 @@
-import { AlertController, LoadingController, NavController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import {Component } from '@angular/core';
+import { NavController, ViewController, Loading, LoadingController, ToastController }
+from 'ionic-angular';
+import { User } from '../../model/user';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthData } from '../../providers/auth-data';
 import { EmailValidator } from '../../app/validators/email';
 import { TabsPage } from '../tabs/tabs';
+import { AuthService } from '../../providers/auth-service';
+import { AbstractBasePage } from '../abstract-base';
 
 @Component({
-  selector: 'page-signup',
-  templateUrl: 'signup.html'
+    selector: 'page-signup',
+    templateUrl: 'signup.html'
 })
 
-export class SignupPage {
-  public signupForm;
-  loading: any;
+export class SignupPage extends AbstractBasePage {
+    user: User = User.createBlank();
 
-  constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder, 
-  public loadingCtrl: LoadingController, public alertCtrl: AlertController) 
-  {
-    this.signupForm = formBuilder.group({
-      fName: [''],
-      lName: [''],
-      email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
-      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
-    });
-  }
-
-  signupUser() {
-    if (!this.signupForm.valid) {
-      console.log(this.signupForm.value);
-    } else {
-      this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
-      .then( () => {
-        this.loading.dismiss().then( () => {
-          this.nav.setRoot(TabsPage);
-        });
-      }, (error) => {
-        this.loading.dismiss().then( () => {
-          this.alertCtrl.create({
-            message: error.message,
-            buttons: [{
-              text: 'Ok',
-              role: 'cancel'
-            }]
-          });
-        });
-      });
-      this.loading = this.loadingCtrl.create();
-      this.loading.present();
+    constructor(public navCtrl: NavController,
+                public viewCtrl: ViewController,
+                public loadingCtrl: LoadingController,
+                public toastCtrl: ToastController,
+                private authService: AuthService
+    ) { 
+        super(navCtrl, loadingCtrl, toastCtrl);
     }
-  }
+
+    dismiss(signedUp: boolean = false): void {
+        this.viewCtrl.dismiss(signedUp);
+    }
+
+    signUp(): void {
+        this.showLoading();
+        this.authService.create(this.user)
+        .then(_ => {
+            this.hideLoading();
+            this.navCtrl.setRoot(TabsPage);
+            // this.dismiss(true);
+        })
+        .catch(error => {
+            this.hideLoading();
+            this.showError(error);
+      });
+    }
+
+    protected getLoadingMessage(): string {
+        return 'Creating your account...';
+    }
+
+    protected getErrorMessage(error: any): string {
+        return 'Failed to create your account.';
+    }
 }
