@@ -11,7 +11,7 @@ import { ReactorsPage } from '../pages/reactors/reactors';
 import { SignupPage } from '../pages/signup/signup'
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { AuthData } from '../providers/auth-data';
+import { AuthService } from '../providers/auth-service';
 
 import {AngularFire} from 'angularfire2';
 import firebase from 'firebase';
@@ -32,10 +32,10 @@ export class CivicReactorApp {
   @ViewChild(Nav) nav: Nav;
 
   appPages: PagesInterface[] = [
-    { title: 'Reactors', component: TabsPage, tabComponent: ReactorsPage, icon: 'filing' },
-    { title: 'Projects', component: TabsPage, tabComponent: ProjectListPage, icon: 'filing' },
-    { title: 'Map', component: TabsPage, tabComponent: MapPage, index: 1, icon: 'map'},
-    { title: 'About', component: TabsPage, tabComponent: AboutPage, index: 2, icon: 'information-circle' }
+    { title: 'Reactors', component: TabsPage, tabComponent: ReactorsPage, icon: 'contacts' },
+    { title: 'Projects', component: TabsPage, tabComponent: ProjectListPage, index: 1, icon: 'filing' },
+    { title: 'Map', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map'},
+    { title: 'About', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
   ]
   loggedInPages: PagesInterface[] = [
     { title: 'Account', component: AccountPage, icon: 'person' },
@@ -51,7 +51,7 @@ export class CivicReactorApp {
 
   constructor(
     public af: AngularFire,
-    public authData: AuthData,
+    public authService: AuthService,
     public menu: MenuController,
     public platform: Platform,
     splashScreen: SplashScreen
@@ -85,7 +85,7 @@ export class CivicReactorApp {
 
     if (page.logsOut === true) {
       setTimeout(() => {;
-        this.authData.logoutUser();
+        this.authService.logOut();
       }, 1000);
     }
   }

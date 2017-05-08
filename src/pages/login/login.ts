@@ -1,75 +1,68 @@
-import { AlertController, LoadingController, NavController, Platform } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthData } from '../../providers/auth-data';
-import { SignupPage } from '../signup/signup';
-import { TabsPage } from '../tabs/tabs';
-import { EmailValidator } from '../../app/validators/email';
+import {
+  NavController,
+  ModalController,
+  LoadingController,
+  Loading,
+  ToastController,
+  ViewController,
+} from 'ionic-angular';
+import { SignupPage } from '../../pages/signup/signup';
+import { TabsPage } from '../../pages/tabs/tabs';
+import { User } from "../../model/user";
+import { AuthService } from "../../providers/auth-service";
+import { AbstractBasePage } from '../abstract-base';
 
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+    selector: 'page-login',
+    templateUrl: 'login.html'
 })
-export class LoginPage {
-  public loginForm;
-  loading: any;
 
-  constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
-    public alertCtrl: AlertController, public loadingCtrl: LoadingController, public platform: Platform) {
+export class LoginPage extends AbstractBasePage {
+    user: User = User.createBlank();
 
-    /**
-     * Creates a ControlGroup that declares the fields available, their values and the validators that they are going
-     * to be using.
-     *
-     * I set the password's min length to 6 characters because that's Firebase's default, feel free to change that.
-     */
-    this.loginForm = formBuilder.group({
-      email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
-      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
-    });
-  }
-
-  /**
-   * If the form is valid it will call the AuthData service to log the user in displaying a loading component while
-   * the user waits.
-   *
-   * If the form is invalid it will just log the form value, feel free to handle that as you like.
-   */
-  loginUser(): void {
-    if (!this.loginForm.valid){
-    } else {
-      this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password)
-      .then( authData => {
-        this.loading.dismiss().then( () => {
-          this.nav.setRoot(TabsPage);
-        });
-      }, error => {
-        this.loading.dismiss().then( () => {
-          let alert = this.alertCtrl.create({
-            message: error.message,
-            buttons: [
-              {
-                text: "Ok",
-                role: 'cancel'
-              }
-            ]
-          });
-          alert.present();
-        });
-      });
-
-      this.loading = this.loadingCtrl.create();
-      this.loading.present();
+    constructor(public navCtrl: NavController,
+                public loadingCtrl: LoadingController,
+                public modalCtrl: ModalController,
+                public toastCtrl: ToastController,
+                public viewCtrl: ViewController,
+                private authService: AuthService
+                ) {
+        super(navCtrl, loadingCtrl, toastCtrl);
     }
-  }
 
-  goToSignup(): void {
-    this.nav.push(SignupPage);
-  }
+    logIn(): void {
+        this.showLoading();
+        this.authService.logIn(this.user).then(_ => {
+            this.hideLoading();
+            this.navCtrl.setRoot(TabsPage);
+            // this.dismiss();
+        }).catch(error => {
+            this.hideLoading();
+            this.showError(error);
+        });
+    }
 
-  goToResetPassword(): void {
-    // this.nav.push(ResetPasswordPage);
-  }
+    signUp(): void {
+        const modal = this.modalCtrl.create(SignupPage);
+        modal.onDidDismiss(signedUp => {
+            if (signedUp) {
+                this.dismiss();
+            }
+        });
+        modal.present();
+    }
+
+    dismiss(): void {
+        this.viewCtrl.dismiss();
+    }
+
+    protected getLoadingMessage(): string {
+        return 'Log in...';
+    }
+
+    protected getErrorMessage(error: any): string {
+        return 'Failed to log in. Please check your email and password';
+    }
 
 }
-

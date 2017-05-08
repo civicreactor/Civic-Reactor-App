@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import firebase from 'firebase';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
@@ -6,10 +6,20 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 export class UserData {
     public userProfile: firebase.database.Reference;
     public currentUser: firebase.User;
+    public user: any;
+    zone: NgZone;
 
     constructor(public af: AngularFire) {
-        this.currentUser = firebase.auth().currentUser;
         this.userProfile = firebase.database().ref('/userProfile');
+        this.zone = new NgZone({});
+        af.auth.subscribe((user) => {
+            this.zone.run(() => {
+                if (user) {
+                    this.user = user;
+                    this.currentUser = user.auth;   
+                }
+            })
+        })
     }
 
     getUsers() {
@@ -17,24 +27,23 @@ export class UserData {
     }
 
     getUserProfile(): firebase.database.Reference {
-        return this.userProfile.child(this.currentUser.uid);
+        return this.userProfile.child(this.user.uid);
     }
 
-    updateName(firstName: string, lastName: string): firebase.Promise<any> {
-        return this.userProfile.child(this.currentUser.uid).update({
+    updateFirstName(firstName: string): firebase.Promise<any> {
+        return this.userProfile.child(this.user.uid).update({
             firstName: firstName,
+        });
+    }
+
+    updateLastName(lastName: string): firebase.Promise<any> {
+        return this.userProfile.child(this.user.uid).update({
             lastName: lastName,
         });
     }
 
-    updateDOB(birthDate: string): firebase.Promise<any> {
-        return this.userProfile.child(this.currentUser.uid).update({
-            birthDate: birthDate,
-        });
-    }
-
     updateEmail(newEmail: string, password: string): firebase.Promise<any> {
-        const credential = firebase.auth.EmailAuthProvider.credential(this.currentUser.email, password);
+        const credential = firebase.auth.EmailAuthProvider.credential( this.currentUser.email, password);
 
         return this.currentUser.reauthenticate(credential).then(user => {
             this.currentUser.updateEmail(newEmail).then(user => {

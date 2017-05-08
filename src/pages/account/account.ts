@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController } from 'ionic-angular';
 
-import { AuthData } from '../../providers/auth-data';
+import { AuthService } from '../../providers/auth-service';
 import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
 
@@ -14,32 +14,24 @@ import firebase from 'firebase';
 })
 export class AccountPage {
   public userProfile: any;
-  public birthDate: string;
 
-  constructor(public alertCtrl: AlertController, public nav: NavController, public authData: AuthData, 
+  constructor(public alertCtrl: AlertController, public nav: NavController, public authService: AuthService, 
               public userData: UserData, public af: AngularFire) {}
 
   ionViewDidEnter(){
     this.userData.getUserProfile().on('value', (data) => {
       this.userProfile = data.val();
-      this.birthDate = this.userProfile.birthDate;
     });
   }
 
-
-  updateName() {
+  updateFirstName() {
     let alert = this.alertCtrl.create({
-      message: "Your first name and last name",
+      message: "Your first name",
       inputs: [
         {
           name: 'firstName',
           placeholder: 'Your first name',
           value: this.userProfile.firstName
-        },
-        {
-          name: 'lastName',
-          placeholder: 'Your last name',
-          value: this.userProfile.lastName
         },
       ],
       buttons: [
@@ -49,7 +41,7 @@ export class AccountPage {
         {
           text: 'Save',
           handler: data => {
-            this.userData.updateName(data.firstName, data.lastName);
+            this.userData.updateFirstName(data.firstName);
           }
         }
       ]
@@ -57,8 +49,29 @@ export class AccountPage {
     alert.present();
   }
 
-  updateDOB(birthDate) {
-    this.userData.updateDOB(birthDate);
+  updateLastName() {
+    let alert = this.alertCtrl.create({
+      message: "Your last name",
+      inputs: [
+        {
+          name: 'lastName',
+          placeholder: 'Your last name',
+          value: this.userProfile.lastName
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.userData.updateLastName(data.lastName);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   updateEmail() {
@@ -119,7 +132,7 @@ export class AccountPage {
   }
 
   logoutUser() {
-    this.authData.logoutUser();
+    this.authService.logOut();
     this.nav.push(TabsPage);
   }
 

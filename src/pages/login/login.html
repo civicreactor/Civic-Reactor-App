@@ -1,14 +1,36 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title>Log In</ion-title>
+    <ion-buttons start>
+      <button ion-button start (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
+  <form #loginForm = "ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" [(ngModel)]="user.email" name="email" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <button ion-button block round large (click)="logIn()" 
+                [disabled]="!loginForm.form.valid">Log In</button>
+      </ion-item>
+      <ion-item>
+        <button ion-button block round color="light" (click)="signUp()">Sign Up</button>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+
+
+<!--<form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
 
     <ion-item>
       <ion-label stacked>Email</ion-label>
@@ -42,6 +64,4 @@
 
     <button ion-button block clear (click)="goToResetPassword()">
       I forgot my password
-    </button>
-
-</ion-content>
+    </button>-->
