@@ -10,7 +10,26 @@ export class ProjectFilterPage {
     techs: Array<{name: string, isChecked: boolean}> = [];
 
     constructor(public navParams: NavParams, public viewCtrl: ViewController){
-        this.techs = [{name: 'javascript', isChecked: true}, {name: 'firebase', isChecked: true}];
+        this.techs = [{name: 'javascript', isChecked: true}, {name: 'firebase', isChecked: true},
+                      {name: 'Heroku', isChecked: true}];
+    }
+
+    applyFilters() {
+    // Pass back a new array of track names to exclude
+        let includedTrackNames = this.techs.filter(c => c.isChecked).map(c => c.name);
+        console.log('included: '+includedTrackNames)
+        // this.dismiss(includedTrackNames);
+        // this.projectList.getProjects('', includedTrackNames);
+    }
+
+    resetFilters() {
+        this.techs.forEach(t => {
+            t.isChecked = true;
+        })
+    }
+
+    dismiss(data?: any) {
+        this.viewCtrl.dismiss(data);
     }
 
 
