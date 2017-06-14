@@ -1,0 +1,45 @@
+$categories: (
+ javascript: color($colors, primary),
+ firebase: #AC282B,
+//  communication: #8E8D93,
+//  tooling: #FE4C52,
+//  services: #FD8B2D,
+//  design: #FED035,
+//  workshop: #69BB7B,
+//  food: #3BC7C4,
+//  documentation: #B16BE3,
+//  navigation: #6600CC,
+);
+
+@function auxiliary-categories() {
+  @return map-remove($categories);
+}
+
+page-project-list {
+
+  .card-ios + .ion-card {
+    margin-top: 12px !important;
+  }
+
+  .scroll-content {
+    background: #EDEDED;
+  }
+
+  .speaker-card ion-card-header .item {
+    padding: 4px 16px;
+  }
+
+  .speaker-card ion-card-header,
+  .speaker-card ion-card-content,
+  .speaker-card ion-card-content .list ion-item-content, {
+    padding: 0;
+  }
+
+  @media (min-width: 600px) {
+    .speaker-card {
+      width: 60%;
+      margin: 10px auto;
+    }
+  }
+
+}

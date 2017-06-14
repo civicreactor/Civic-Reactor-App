@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logoutUser()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      Personal Information
+    </ion-list-header>
+
+    <ion-item (click)="updateFirstName()">
+      <ion-grid>
+        <ion-row>
+          <ion-col width-50>
+            First Name
+          </ion-col>
+          <ion-col *ngIf="userProfile?.firstName">
+            {{userProfile.firstName}}
+          </ion-col>
+          <ion-col class="placeholder-profile" *ngIf="!userProfile?.firstName">
+            <span>
+              Tap here to edit.
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item (click)="updateLastName()">
+      <ion-grid>
+        <ion-row>
+          <ion-col width-50>
+            Last Name
+          </ion-col>
+          <ion-col *ngIf="userProfile?.lastName">
+            {{userProfile.lastName}}
+          </ion-col>
+          <ion-col class="placeholder-profile" *ngIf="!userProfile?.lastName">
+            <span>
+              Tap here to edit.
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <ion-item (click)="updateEmail()">
+      <ion-grid>
+        <ion-row>
+          <ion-col width-50>
+            Email
+          </ion-col>
+          <ion-col width-50 *ngIf="userProfile?.email">
+            {{userProfile.email}}
+          </ion-col>
+          <ion-col class="placeholder-profile" *ngIf="!userProfile?.email">
+            <span>
+              Tap here to edit.
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <ion-item (click)="updatePassword()">
+      <ion-grid>
+        <ion-row>
+          <ion-col width-50>
+            Password
+          </ion-col>
+          <ion-col class="placeholder-profile">
+            <span>
+              Tap here to edit.
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

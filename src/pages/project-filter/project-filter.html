@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">Cancel</button>
+        </ion-buttons>
+        <ion-title>Filter Projects</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="applyFilters()" strong>Done</button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="outer-content">
+    <ion-list>
+        <ion-list-header>Techs</ion-list-header>
+            <!--<ion-item>
+                <ion-label>JavaScript</ion-label>
+                <ion-label>Angular 2</ion-label>
+            </ion-item>-->
+            
+        <ion-item *ngFor="let tech of techs" [attr.tech]="tech.name | lowercase">
+            <span item-left class="dot"></span>
+            <ion-label>{{tech.name}}</ion-label>
+            <ion-toggle [(ngModel)]="tech.isChecked" color="secondary"></ion-toggle>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <button ion-item (click)="resetFilters()" detail-none class="reset-filters">
+            Reset All Filters
+        </button>
+    </ion-list>
+
+</ion-content>
