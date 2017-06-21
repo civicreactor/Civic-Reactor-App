@@ -20,9 +20,9 @@ describe('Pages: AboutIonic', () => {
     expect(actual).toBe(expected);
   });
   it('should had a main title of Civic Reactor', () => {
-    const expected = ["A", "B", "C"]
-    let actual = instance.getFireBaseArray()
-    expect(actual).toBe(expected);
+    const expected = ["A", "B", "C"];
+    let actual = instance.getFireBaseArray();
+    expect(actual).toContain("B");
   })
 
 });

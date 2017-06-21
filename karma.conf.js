@@ -14,6 +14,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
+      require('karma-mocha-reporter'),
       require('@angular/cli/plugins/karma')
     ],
     client:{
@@ -33,6 +34,7 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
     },
     angularCli: {
+      config: './angular-cli.json',
       environment: 'dev'
     },
     reporters: config.angularCli && config.angularCli.codeCoverage

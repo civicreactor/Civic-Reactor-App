@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
-import firebase from 'firebase';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class UserData {

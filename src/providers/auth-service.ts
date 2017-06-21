@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/startWith';
 import * as find from 'lodash.find';
 import * as gravatar from 'gravatar';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthService {

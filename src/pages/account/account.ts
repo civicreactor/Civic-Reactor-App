@@ -6,7 +6,7 @@ import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
 
 import { AngularFire } from 'angularfire2';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'page-account',

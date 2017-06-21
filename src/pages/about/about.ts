@@ -5,14 +5,17 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'about.html'
 })
 export class AboutPage {
+
+  title: any = "Civic Reactor";
+
   constructor(public navCtrl: NavController) {
   }
   getWelcomeMessage = () => {
     return "Hello World"
   }
 
-  getFireBaseArray = () => ({
-    return: ["X", "Y", "Z"]
-  })
+  getFireBaseArray = () => {
+    return ["A", "B", "C"];
+  }
 
 }
