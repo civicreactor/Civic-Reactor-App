@@ -7,15 +7,26 @@ import * as find from 'lodash.find';
 import * as gravatar from 'gravatar';
 import firebase from 'firebase';
 
+export const providers = {
+  [AuthProviders.Google]: 'google',
+  [AuthProviders.Twitter]: 'twitter',
+  [AuthProviders.Facebook]: 'facebook',
+  [AuthProviders.Github]: 'github',
+};
+
+
 @Injectable()
 export class AuthService {
     user: BehaviorSubject<User>;
     defaultPic: any;
+    provider: any;
 
     constructor(private af: AngularFire) {
         this.user = new BehaviorSubject<User>(null);
         this.af.auth.subscribe(authState => this.user.next(this.fromAuthState(authState)));
         this.defaultPic = "http://wearesmile.com/assets/themes/s5/img/logo.png";
+        this.provider = new firebase.auth.GithubAuthProvider();
+        this.provider.addScope('user:email');
     }
 
     create(user: User): firebase.Promise<any> {
@@ -36,6 +47,20 @@ export class AuthService {
         })
     }
 
+    logInWithGithub() {
+        firebase.auth().signInWithRedirect(this.provider);
+        return firebase.auth().getRedirectResult().then(function (result) {
+            console.log(result);
+            if (result.credential) {
+                var token = result.credential.accessToken;
+            }
+            var user = result.user;
+        }).catch(function(error) {
+            console.log(error);
+            // var errorCode = error.code;
+        })
+    }
+
     logOut() {
         this.af.auth.logout();
     }
@@ -46,14 +71,34 @@ export class AuthService {
 
     fromAuthState(authState: FirebaseAuthState): User {
         if (authState) {
-            if (authState.provider == AuthProviders.Password) {
+            if (authState.provider == AuthProviders.Password)  {
+                console.log('password provider');
                 const user = authState.auth;
-                return new User(authState.uid, user.displayName || user.email, 
+                return new User(authState.uid, user.displayName || user.email,
                 user.email, '', gravatar.url(user.email));
-            }
+            } else if (authState.provider in providers) {
+                console.log('github provider');
+                const user = authState[providers[authState.provider]] as
+                firebase.UserInfo;
+                console.log(user.providerId + ' ' + user.photoURL + '' + authState.uid + ' ' + user.email)
+                return new User(authState.uid, user.displayName, user.email, '',
+                user.photoURL || gravatar.url(user.email));
+            } 
         }
         return null;
     }
+
+    //fromAuthState(authState: FirebaseAuthState): User {
+    //     if (authState) {
+    //         if (authState.provider == AuthProviders.Password) {
+    //             const user = authState.auth;
+    //             return new User(authState.uid, user.displayName || user.email, 
+    //             user.email, '', gravatar.url(user.email));
+    //         }
+    //     }
+    //     return null;
+    // }
+
 }
 
 

@@ -31,9 +31,22 @@ export class LoginPage extends AbstractBasePage {
         super(navCtrl, loadingCtrl, toastCtrl);
     }
 
-    logIn(): void {
+    logIn(user): void {
         this.showLoading();
         this.authService.logIn(this.user).then(_ => {
+            this.hideLoading();
+            this.navCtrl.setRoot(TabsPage);
+            // this.dismiss();
+        }).catch(error => {
+            this.hideLoading();
+            this.showError(error);
+        });
+    }
+
+    logInWithGithub() {
+        // this.authService.logInWithGithub();
+        this.showLoading();
+        this.authService.logInWithGithub().then(_ => {
             this.hideLoading();
             this.navCtrl.setRoot(TabsPage);
             // this.dismiss();

@@ -3,6 +3,7 @@ import { AlertController, List, ModalController, NavController } from 'ionic-ang
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ProjectData } from '../../providers/project-data';
 import { ProjectFilterPage } from '../project-filter/project-filter';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'page-project-list',
@@ -18,8 +19,15 @@ export class ProjectListPage {
   excludedTracks: any = [];
   zone: NgZone;
   currentUser: string;
+  projectRef: any;
+  projectDir: any;
+  loadedProjectDir: any;
 
-  constructor(public af: AngularFire, public alertCtrl: AlertController, public modalCtrl: ModalController, public navCtrl: NavController, 
+
+  constructor(public af: AngularFire, 
+              public alertCtrl: AlertController, 
+              public modalCtrl: ModalController, 
+              public navCtrl: NavController, 
               public projectData: ProjectData) {
     this.zone = new NgZone({});
     af.auth.subscribe((user) => {
@@ -32,6 +40,45 @@ export class ProjectListPage {
     this.segment = 'all';
     this.queryText = '';
     this.projects = projectData.getProjects();
+    
+    this.projectRef = firebase.database().ref('/projects');
+    this.projectRef.on('value', projectDir => {
+      let projects = [];
+      projectDir.forEach(project => {
+        projects.push(project.val());
+      });
+      this.projectDir = projects;
+      this.loadedProjectDir = projects;
+    });
+  }
+
+  initializeItems(): void {
+    this.projectDir = this.loadedProjectDir;
+  }
+
+  getItems(searchbar) {
+    
+    this.initializeItems();
+
+    var q = searchbar.srcElement.value;
+
+    if (!q) {
+      return;
+    }
+
+    // console.log('vals: '+this.projectDir);
+    // console.log('vals: '+this.loadedProjectDir);
+
+    this.projects = this.projectDir.filter((v) => {
+      if (v.name && q) {
+        if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+    console.log(this.projects)
+    // console.log(q, this.projectDir.length);
   }
 
   getProjects(s) {
@@ -103,4 +150,6 @@ export class ProjectListPage {
   updateProjects() {
     this.projectList && this.projectList.closeSlidingItems();
   }
+
+  
 }

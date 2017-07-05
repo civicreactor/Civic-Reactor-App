@@ -21,7 +21,7 @@
   </ion-navbar>
 
   <ion-toolbar no-border-top>
-    <ion-searchbar color="primary" [(ngModel)]="queryText" (ionInput)="updateProjects()" placeholder="Search">
+    <ion-searchbar color="primary" (ionInput)="getItems($event)" placeholder="Search">
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>

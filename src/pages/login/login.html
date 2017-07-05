@@ -19,8 +19,11 @@
         <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
       </ion-item>
       <ion-item>
-        <button ion-button block round large (click)="logIn()" 
+        <button ion-button block round large (click)="logIn(user)" 
                 [disabled]="!loginForm.form.valid">Log In</button>
+      </ion-item>
+      <ion-item>
+        <button ion-button block round large (click)="logInWithGithub()">Log In with Github</button>
       </ion-item>
       <ion-item>
         <button ion-button block round color="light" (click)="signUp()">Sign Up</button>
