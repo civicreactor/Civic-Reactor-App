@@ -3,8 +3,8 @@ import { AngularFire, AuthProviders, AuthMethods, FirebaseAuthState } from 'angu
 import { User } from '../model/user';
 import { BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/startWith';
-import * as find from 'lodash.find';
-import * as gravatar from 'gravatar';
+// import * as find from 'lodash.find';
+// import * as gravatar from 'gravatar';
 import * as firebase from 'firebase';
 
 export const providers = {
@@ -34,8 +34,7 @@ export class AuthService {
             firebase.database().ref('/userProfile').child(newUser.uid).set({
                 firstName: user.fName,
                 lastName: user.lName,
-                email: user.email,
-                profilePic: gravatar.url(user.email, {d: this.defaultPic}, true),
+                email: user.email
             });
         });
     }
@@ -57,7 +56,6 @@ export class AuthService {
             var user = result.user;
         }).catch(function(error) {
             console.log(error);
-            // var errorCode = error.code;
         })
     }
 
@@ -74,15 +72,15 @@ export class AuthService {
             if (authState.provider == AuthProviders.Password)  {
                 console.log('password provider');
                 const user = authState.auth;
-                return new User(authState.uid, user.displayName || user.email,
-                user.email, '', gravatar.url(user.email));
+                // return new User(authState.uid, user.displayName || user.email,
+                // user.email, '');
             } else if (authState.provider in providers) {
                 console.log('github provider');
                 const user = authState[providers[authState.provider]] as
                 firebase.UserInfo;
                 console.log(user.providerId + ' ' + user.photoURL + '' + authState.uid + ' ' + user.email)
                 return new User(authState.uid, user.displayName, user.email, '',
-                user.photoURL || gravatar.url(user.email));
+                user.photoURL);
             } 
         }
         return null;
