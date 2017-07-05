@@ -17,10 +17,16 @@
     "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/test.ts",
+    "**/*.spec.ts"
   ],
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false
-  }
+  },
+  "types": [
+    "jasmine",
+    "firebase"
+  ]
 }

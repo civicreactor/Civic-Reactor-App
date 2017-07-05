@@ -14,7 +14,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { AuthService } from '../providers/auth-service';
 
 import {AngularFire} from 'angularfire2';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 export interface PagesInterface {
   title: string,
