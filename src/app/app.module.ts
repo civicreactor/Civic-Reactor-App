@@ -21,6 +21,9 @@ import { UserData } from '../providers/user-data';
 
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { OauthCordova } from 'ng2-cordova-oauth/platform/cordova';
+import { Oauth } from 'ng2-cordova-oauth/oauth';
+
 export const firebaseConfig = {
       apiKey: API_FIREBASE_KEY.API_FIREBASE_KEY,
       authDomain: "civic-mobile-app-46e73.firebaseapp.com",
@@ -70,7 +73,8 @@ export const myFirebaseAuthConfig = {
     ProjectData,
     SplashScreen,
     UserData,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: Oauth, useClass: OauthCordova }
   ]
 })
 export class AppModule {}

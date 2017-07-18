@@ -75,10 +75,20 @@ export class AuthService {
                 // return new User(authState.uid, user.displayName || user.email,
                 // user.email, '');
             } else if (authState.provider in providers) {
-                console.log('github provider');
                 const user = authState[providers[authState.provider]] as
                 firebase.UserInfo;
-                console.log(user.providerId + ' ' + user.photoURL + '' + authState.uid + ' ' + user.email)
+                console.log('a: '+authState.provider)
+                console.log('b: '+providers[authState.provider])
+                console.log('c: '+authState[providers[authState.provider]])
+                console.log('d: '+user)
+                // console.log(user.providerId + ' ' + user.photoURL + '' + authState.uid + ' ' + user.email)
+                firebase.database().ref('/userProfile').child(authState.uid).set({
+                    firstName: user.displayName.split(' ')[0],
+                    lastName:  user.displayName.split(' ')[1],
+                    email: user.email,
+                    profilePic: user.photoURL,
+                });
+
                 return new User(authState.uid, user.displayName, user.email, '',
                 user.photoURL);
             } 
