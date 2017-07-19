@@ -54,6 +54,28 @@ export class LoginPage extends AbstractBasePage {
             this.hideLoading();
             this.showError(error);
         });
+
+        firebase.auth().signInWithRedirect(new firebase.auth.GithubAuthProvider());
+        firebase.auth().getRedirectResult().then(function (result) {
+            console.log(result);
+            if (result.credential) {
+                var token = result.credential.accessToken;
+            }
+            var user = result.user;
+            console.log('user'+user)
+
+
+            firebase.database().ref('/userProfile').child(user.uid).set({
+                firstName: user.displayName.split(' ')[0],
+                lastName:  user.displayName.split(' ')[1],
+                email: user.email,
+                profilePic: user.photoURL,
+            });
+
+
+        }).catch(function(error) {
+            console.log(error);
+        })
     }
 
     signUp(): void {

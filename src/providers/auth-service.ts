@@ -23,7 +23,6 @@ export class AuthService {
 
     constructor(private af: AngularFire) {
         this.user = new BehaviorSubject<User>(null);
-        this.af.auth.subscribe(authState => this.user.next(this.fromAuthState(authState)));
         this.defaultPic = "http://wearesmile.com/assets/themes/s5/img/logo.png";
         this.provider = new firebase.auth.GithubAuthProvider();
         this.provider.addScope('user:email');
@@ -66,46 +65,6 @@ export class AuthService {
     resetPassword(email: string): firebase.Promise<any> {
         return firebase.auth().sendPasswordResetEmail(email);
     }
-
-    fromAuthState(authState: FirebaseAuthState): User {
-        if (authState) {
-            if (authState.provider == AuthProviders.Password)  {
-                console.log('password provider');
-                const user = authState.auth;
-                // return new User(authState.uid, user.displayName || user.email,
-                // user.email, '');
-            } else if (authState.provider in providers) {
-                const user = authState[providers[authState.provider]] as
-                firebase.UserInfo;
-                console.log('a: '+authState.provider)
-                console.log('b: '+providers[authState.provider])
-                console.log('c: '+authState[providers[authState.provider]])
-                console.log('d: '+user)
-                // console.log(user.providerId + ' ' + user.photoURL + '' + authState.uid + ' ' + user.email)
-                firebase.database().ref('/userProfile').child(authState.uid).set({
-                    firstName: user.displayName.split(' ')[0],
-                    lastName:  user.displayName.split(' ')[1],
-                    email: user.email,
-                    profilePic: user.photoURL,
-                });
-
-                return new User(authState.uid, user.displayName, user.email, '',
-                user.photoURL);
-            } 
-        }
-        return null;
-    }
-
-    //fromAuthState(authState: FirebaseAuthState): User {
-    //     if (authState) {
-    //         if (authState.provider == AuthProviders.Password) {
-    //             const user = authState.auth;
-    //             return new User(authState.uid, user.displayName || user.email, 
-    //             user.email, '', gravatar.url(user.email));
-    //         }
-    //     }
-    //     return null;
-    // }
 
 }
 
