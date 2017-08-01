@@ -20,6 +20,7 @@ import { ProjectData } from '../providers/project-data';
 import { UserData } from '../providers/user-data';
 
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
 import { OauthCordova } from 'ng2-cordova-oauth/platform/cordova';
 import { Oauth } from 'ng2-cordova-oauth/oauth';
@@ -37,6 +38,12 @@ export const myFirebaseAuthConfig = {
   method: AuthMethods.Password
 }
 
+export const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': '46aba71e'
+  }
+};
+
 @NgModule({
   declarations: [
     CivicReactorApp,
@@ -52,6 +59,7 @@ export const myFirebaseAuthConfig = {
   ],
   imports: [
     IonicModule.forRoot(CivicReactorApp),
+    CloudModule.forRoot(cloudSettings),
     BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],

@@ -12,16 +12,18 @@ import * as firebase from 'firebase';
 export class ProjectListPage {
   @ViewChild('projectList', { read: List }) projectList: List;
 
-  projects; favs: any;
+  projects:firebase.database.Reference;
+  favs:any;
   segment: any;
   placeholder: any;
   queryText: any;
   excludedTracks: any = [];
   zone: NgZone;
   currentUser: string;
-  projectRef: any;
-  projectDir: any;
-  loadedProjectDir: any;
+  projectRef: firebase.database.Reference;
+  projectDir: Array<any>;
+  loadedProjectDir: Array<any>;
+  loadedProjectFavsDir: Array<any>;
 
 
   constructor(public af: AngularFire, 
@@ -39,13 +41,15 @@ export class ProjectListPage {
     });
     this.segment = 'all';
     this.queryText = '';
-    this.projects = projectData.getProjects();
     
     this.projectRef = firebase.database().ref('/projects');
     this.projectRef.on('value', projectDir => {
       let projects = [];
       projectDir.forEach(project => {
-        projects.push(project.val());
+        let pr = project.val();
+        pr.id = project.key;
+        projects.push(pr);
+        return false;
       });
       this.projectDir = projects;
       this.loadedProjectDir = projects;
@@ -53,7 +57,10 @@ export class ProjectListPage {
   }
 
   initializeItems(): void {
-    this.projectDir = this.loadedProjectDir;
+    if (this.segment === "all")
+      this.projectDir = this.loadedProjectDir;
+    else
+      this.projectDir = this.loadedProjectFavsDir;
   }
 
   getItems(searchbar) {
@@ -65,11 +72,8 @@ export class ProjectListPage {
     if (!q) {
       return;
     }
-
-    // console.log('vals: '+this.projectDir);
-    // console.log('vals: '+this.loadedProjectDir);
-
-    this.projects = this.projectDir.filter((v) => {
+    console.log('pdir sbar...',this.projectDir)
+    this.projectDir = this.projectDir.filter((v) => {
       if (v.name && q) {
         if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
@@ -77,25 +81,44 @@ export class ProjectListPage {
         return false;
       }
     });
-    console.log(this.projects)
-    // console.log(q, this.projectDir.length);
+    console.log(this.projectDir)
   }
 
   getProjects(s) {
     if (s === 'favorites') {
+      this.segment = "favorites";
       if (this.currentUser) {
-        this.projects = this.projectData.getFavorites();
+        this.getFavorites();
       } else {
-        this.projects = '';
+        this.projectDir = [];
       }
     } else {
-      this.projects = this.projectData.getProjects();
+      this.segment = "all";
+      this.initializeItems()
+      return this.projectDir;
     }
   }
 
+  getFavorites() {
+        let uid = this.currentUser;
+        let favObjs =  this.af.database.list('/projects', {query: {orderByChild: `/users/${uid}`, equalTo: true}, preserveSnapshot: true});
+        favObjs.subscribe(snapshots => {
+            let favorites =[];
+            snapshots.forEach(s => {
+            let prFav = s.val();
+            prFav.id = s.key;
+            favorites.push(prFav);
+          });
+          this.projectDir = favorites;
+          this.loadedProjectFavsDir = favorites;
+        });
+        return this.projectDir;
+    };
+
   addProjectToFavorites(p) {
     if (this.currentUser){
-      this.projectData.addFavoriteProject(p.$key);
+      this.projectData.addFavoriteProject(p.id);
+      this.initializeItems();
       let alert = this.alertCtrl.create({
         title: 'Favorite added',
         buttons: [{
@@ -116,7 +139,7 @@ export class ProjectListPage {
 
   removeProjectFromFavorites(p) {
     if (this.currentUser){
-      this.projectData.removeProjectFromFavorites(p.$key);
+      this.projectData.removeProjectFromFavorites(p.id);
       let alert = this.alertCtrl.create({
         title: 'Favorite removed',
         buttons: [{
