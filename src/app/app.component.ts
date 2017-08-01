@@ -1,4 +1,8 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
+
+import {Deploy} from '@ionic/cloud-angular';
+
+
 import { MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -54,6 +58,7 @@ export class CivicReactorApp {
     public authService: AuthService,
     public menu: MenuController,
     public platform: Platform,
+    public deploy: Deploy,
     splashScreen: SplashScreen
   ) {
     this.zone = new NgZone({});

@@ -8,7 +8,7 @@ export class ProjectData {
     projects: any;
     zone: NgZone;
     currentUser: string;
-    favorites: any = [];
+    favorites: Array<any>;
 
     constructor(public af:AngularFire, public userData:UserData) {
         this.zone = new NgZone({});
@@ -21,20 +21,18 @@ export class ProjectData {
         });
     }
 
-    getProjects() {
-        return this.af.database.list('/projects');
-    }
+    // getProjects() {
+    //     return firebase.database().ref('/projects');
+    // }
 
      addFavoriteProject(projectKey: string) {
-        return firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(true);
+        firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(true);
     }
 
     removeProjectFromFavorites(projectKey: string) {
-        return firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(false);
+        firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(false);
     }
 
-    getFavorites() {
-        let uid = this.currentUser;
-        return this.af.database.list('/projects', {query: {orderByChild: `/users/${uid}`, equalTo: true}});
-    }   
+    
+    
 }
