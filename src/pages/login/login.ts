@@ -16,7 +16,6 @@ import { AuthService } from "../../providers/auth-service";
 import { AbstractBasePage } from '../abstract-base';
 import { Oauth } from 'ng2-cordova-oauth/oauth';
 import { OAuthProvider } from 'ng2-cordova-oauth/provider';
-// import { HTTP } from '@ionic-native/http';
 import get from 'lodash.get';
 
 
@@ -55,7 +54,6 @@ export class LoginPage extends AbstractBasePage {
               public viewCtrl: ViewController,
               private authService: AuthService,
               private oauth: Oauth,
-            //   private http: HTTP
                 ) {
         super(navCtrl, loadingCtrl, toastCtrl);
         // this.user = new BehaviorSubject<User>(null);
@@ -101,47 +99,34 @@ export class LoginPage extends AbstractBasePage {
 
     logInWithGithub() {
         this.showLoading();
-        console.log('cl id', GitHubInfo.clientId)
-        console.log('cl sct', GitHubInfo.clientSecret)
-        console.log('state', GitHubInfo.state)
-        console.log('gb prov', this.githubProvider)
-
-        
         this.oauth.logInVia(this.githubProvider).then(response => {
-            console.log('rs...', response)
-            console.log('rs code...', get(response, 'code'))
-        //     let url = "https://github.com/login/oauth/access_token"+ GitHubInfo.clientId + "&" + GitHubInfo.clientSecret +
-        //     "&" + get(response, 'code');
-        //     console.log('url...',url);
-        //     // window.cordovaHTTP.post('https://github.com/login/oauth/access_token', { client_id: GitHubInfo.clientId,
-        //     // client_secret: GitHubInfo.clientSecret,
-        //     // code: get(response, 'code'),
-        //     // state: GitHubInfo.state,
-        //     this.http.post(url, {},{});
-
-        // }, {
-        //     Accept: 'application/json',
-        // },
-        //     response => {
-        //     const data = JSON.parse(response.data);
-        //     const credential = firebase.auth.GithubAuthProvider.
-        //     credential(data.access_token);
-        //     this.authService.logInWithCredential(credential, AuthProviders.
-        //     Github)
-        //         .then(_ => {
-        //             this.hideLoading();
-        //             this.dismiss();
-        //         }).catch(error => {
-        //             this.hideLoading();
-        //             this.showError(error);
-        //         }); 
-        //     },
-        //     response => {
-        //         this.hideLoading();
-        //         this.showError({
-        //         message: response.error,
-        //     });
-        //     });
+            window.cordovaHTTP.post('https://github.com/login/oauth/access_token', { client_id: GitHubInfo.clientId,
+                client_secret: GitHubInfo.clientSecret,
+                code: get(response, 'code'),
+                state: GitHubInfo.state,
+            }, {
+                Accept: 'application/json',
+            },
+                response => {
+                const data = JSON.parse(response.data);
+                const credential = firebase.auth.GithubAuthProvider.
+                credential(data.access_token);
+                this.authService.logInWithCredential(credential, AuthProviders.
+                Github)
+                    .then(_ => {
+                        this.hideLoading();
+                        this.dismiss();
+                    }).catch(error => {
+                        this.hideLoading();
+                        this.showError(error);
+                    }); 
+                },
+                response => {
+                    this.hideLoading();
+                    this.showError({
+                    message: response.error,
+                });
+            });
         }, error => {
             this.hideLoading();
             this.showError(error);

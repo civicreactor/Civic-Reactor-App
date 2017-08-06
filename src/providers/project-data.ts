@@ -19,18 +19,24 @@ export class ProjectData {
                 }
             });     
         });
+        // this.populateProjectsDB();
     }
 
     // getProjects() {
     //     return firebase.database().ref('/projects');
     // }
 
-     addFavoriteProject(projectKey: string) {
+    addFavoriteProject(projectKey: string) {
         firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(true);
     }
 
     removeProjectFromFavorites(projectKey: string) {
         firebase.database().ref('/projects').child(projectKey + '/users/' + this.currentUser).set(false);
+    }
+
+
+    populateProjectsDB() {
+        firebase.database().ref('/projects').push({title:"Spana IWAD", picture: "assets/img/projects/spana-IWAD.png"});
     }
 
     

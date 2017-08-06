@@ -25,8 +25,8 @@ export class AuthService {
         this.user = new BehaviorSubject<User>(null);
         // this.af.auth.subscribe(authState => this.user.next(this.fromAuthState(authState)));
         this.defaultPic = "http://wearesmile.com/assets/themes/s5/img/logo.png";
-        this.provider = new firebase.auth.GithubAuthProvider();
-        this.provider.addScope('user:email');
+        // this.provider = new firebase.auth.GithubAuthProvider();
+        // this.provider.addScope('user:email');
     }
 
     create(user: User): firebase.Promise<any> {
@@ -34,7 +34,8 @@ export class AuthService {
             firebase.database().ref('/userProfile').child(newUser.uid).set({
                 firstName: user.fName,
                 lastName: user.lName,
-                email: user.email
+                email: user.email,
+                profilePic: gravatar.url(user.email) || this.defaultPic
             });
         });
     }
@@ -54,20 +55,6 @@ export class AuthService {
         });
     }
 
-
-    // logInWithGithub() {
-    //     firebase.auth().signInWithRedirect(this.provider);
-    //     return firebase.auth().getRedirectResult().then(function (result) {
-    //         console.log(result);
-    //         if (result.credential) {
-    //             var token = result.credential.accessToken;
-    //         }
-    //         var user = result.user;
-    //     }).catch(function(error) {
-    //         console.log(error);
-    //     })
-    // }
-
     logOut() {
         this.af.auth.logout();
     }
@@ -75,8 +62,6 @@ export class AuthService {
     resetPassword(email: string): firebase.Promise<any> {
         return firebase.auth().sendPasswordResetEmail(email);
     }
-
-     
 
 }
 
