@@ -94,7 +94,8 @@ export class LoginPage extends AbstractBasePage {
     }
 
     protected getErrorMessage(error: any): string {
-        return 'Failed to log in. Please check your email and password';
+        // return 'Failed to log in. Please check your email and password';
+        return error;
     }
 
     logInWithGithub() {
