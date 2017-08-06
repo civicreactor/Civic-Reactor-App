@@ -7,10 +7,10 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="outer-content speaker-list">
+<ion-content class="outer-content">
   <ion-card class="reactor-card" *ngFor="let reactor of reactors | async">
     <ion-card-header>
-      <button ion-item detail-none (click)="goToReactorDetail(speaker)">
+      <button ion-item detail-none (click)="goToReactorDetail(reactor)">
         <ion-avatar *ngIf="reactor.profilePic" item-left>
           <img [src]="reactor.profilePic" alt="Reactor profile pic">
         </ion-avatar>
