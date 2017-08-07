@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { ReactorDetailPage } from '../reactor-detail/reactor-detail';
 import { UserData } from '../../providers/user-data';
 
 @Component({
@@ -24,4 +25,7 @@ export class ReactorsPage {
     return "Hello World";
   }
 
+  goToReactorDetail(reactor: any) {
+    this.navCtrl.push(ReactorDetailPage, reactor);
+  }
 }

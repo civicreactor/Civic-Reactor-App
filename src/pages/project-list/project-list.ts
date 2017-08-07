@@ -16,6 +16,7 @@ export class ProjectListPage {
   favs:any;
   segment: any;
   placeholder: any;
+  searchbar: any;
   queryText: any;
   excludedTracks: any = [];
   zone: NgZone;
@@ -66,25 +67,27 @@ export class ProjectListPage {
   getItems(searchbar) {
     
     this.initializeItems();
+    this.searchbar = searchbar.srcElement;
 
     var q = searchbar.srcElement.value;
 
-    if (!q) {
+    if (!q || !this.projectDir) {
       return;
     }
-    console.log('pdir sbar...',this.projectDir)
+
     this.projectDir = this.projectDir.filter((v) => {
-      if (v.name && q) {
-        if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+      if (v.title && q) {
+        if (v.title.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
         return false;
       }
     });
-    console.log(this.projectDir)
   }
 
   getProjects(s) {
+    if (this.searchbar)
+      this.searchbar.value = "";
     if (s === 'favorites') {
       this.segment = "favorites";
       if (this.currentUser) {

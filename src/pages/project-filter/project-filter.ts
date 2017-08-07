@@ -10,8 +10,8 @@ export class ProjectFilterPage {
     techs: Array<{name: string, isChecked: boolean}> = [];
 
     constructor(public navParams: NavParams, public viewCtrl: ViewController){
-        this.techs = [{name: 'javascript', isChecked: true}, {name: 'firebase', isChecked: true},
-                      {name: 'Heroku', isChecked: true}];
+        this.techs = [{name: 'JavaScript', isChecked: true}, {name: 'Python', isChecked: true},
+                      {name: 'Java', isChecked: true}];
     }
 
     applyFilters() {
