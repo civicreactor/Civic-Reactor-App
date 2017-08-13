@@ -13,6 +13,7 @@ import { ProjectFilterPage } from '../pages/project-filter/project-filter';
 import { ProjectListPage } from '../pages/project-list/project-list';
 import { ReactorsPage } from '../pages/reactors/reactors';
 import { ReactorDetailPage } from '../pages/reactor-detail/reactor-detail';
+import { ProjectDetailPage } from '../pages/project-detail/project-detail';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -52,6 +53,7 @@ export const cloudSettings: CloudSettings = {
     AccountPage,
     LoginPage,
     MapPage,
+    ProjectDetailPage,
     ProjectFilterPage,
     ProjectListPage,
     ReactorDetailPage,
@@ -72,6 +74,7 @@ export const cloudSettings: CloudSettings = {
     AccountPage,
     LoginPage,
     MapPage,
+    ProjectDetailPage,
     ProjectFilterPage,
     ProjectListPage,
     ReactorsPage,

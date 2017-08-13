@@ -3,6 +3,7 @@ import { AlertController, List, ModalController, NavController } from 'ionic-ang
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ProjectData } from '../../providers/project-data';
 import { ProjectFilterPage } from '../project-filter/project-filter';
+import { ProjectDetailPage } from '../project-detail/project-detail';
 import * as firebase from 'firebase';
 
 @Component({
@@ -100,6 +101,10 @@ export class ProjectListPage {
       this.initializeItems()
       return this.projectDir;
     }
+  }
+
+  goToProjectDetail(project: any) {
+    this.navCtrl.push(ProjectDetailPage, project)
   }
 
   getFavorites() {

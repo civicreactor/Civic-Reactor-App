@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { UserData } from '../../providers/user-data';
+
 /*
   Generated class for the ReactorDetailPage page.
 
@@ -13,7 +15,7 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class ReactorDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userData: UserData) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReactorDetailPage');
