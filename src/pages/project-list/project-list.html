@@ -30,7 +30,7 @@
 <ion-content class="outer-content project-list">
   <ion-card #cardProject class="project-card" *ngFor="let project of projectDir">
     <ion-card-header>
-      <button ion-item detail-none>
+      <button ion-item detail-none (click)="goToProjectDetail(project)">
         <ion-thumbnail item-left>
           <img [src]="project.picture" alt="Project profile pic">
         </ion-thumbnail>
