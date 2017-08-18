@@ -5,7 +5,7 @@ export class User {
         public lName: string,
         public email: string,
         public password: string,
-        public photoURL?: string) {}
+        public profilePic: string) {}
 
   static createBlank(): User {
     return new User('', '', '', '', '', '');

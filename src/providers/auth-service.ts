@@ -24,9 +24,10 @@ export class AuthService {
     constructor(private af: AngularFire) {
         this.user = new BehaviorSubject<User>(null);
         // this.af.auth.subscribe(authState => this.user.next(this.fromAuthState(authState)));
-        this.defaultPic = "http://wearesmile.com/assets/themes/s5/img/logo.png";
+        // this.defaultPic = "http://wearesmile.com/assets/themes/s5/img/logo.png";
         // this.provider = new firebase.auth.GithubAuthProvider();
         // this.provider.addScope('user:email');
+        // profilePic: gravatar.url(user.email)
     }
 
     create(user: User): firebase.Promise<any> {
@@ -35,7 +36,7 @@ export class AuthService {
                 firstName: user.fName,
                 lastName: user.lName,
                 email: user.email,
-                profilePic: gravatar.url(user.email) || this.defaultPic
+                profilePic: gravatar.url(user.email) || user.profilePic
             });
         });
     }

@@ -16,10 +16,11 @@ export class UserData {
             this.zone.run(() => {
                 if (user) {
                     this.user = user;
-                    this.currentUser = user.auth;   
+                    this.currentUser = user.auth;  
                 }
             })
         })
+        
     }
 
     getUsers() {
@@ -54,7 +55,7 @@ export class UserData {
         });
     }
 
-    updatePasword(newPassword: string, oldPassword: string): firebase.Promise<any> {
+    updatePassword(newPassword: string, oldPassword: string): firebase.Promise<any> {
         const credential = firebase.auth.EmailAuthProvider.credential(this.currentUser.email, oldPassword);
 
         return this.currentUser.reauthenticate(credential).then(user => {
@@ -64,6 +65,12 @@ export class UserData {
                     console.log(error);  
                 }
             );
+        });
+    }
+
+    updateImageURL(profilePic: string): firebase.Promise<any> {
+        return this.userProfile.child(this.user.uid).update({
+            profilePic: profilePic,
         });
     }
 

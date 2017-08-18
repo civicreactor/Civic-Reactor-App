@@ -14,9 +14,6 @@
         <ion-avatar *ngIf="reactor.profilePic" item-left>
           <img [src]="reactor.profilePic" alt="Reactor profile pic">
         </ion-avatar>
-        <ion-avatar *ngIf="!reactor.profilePic" item-left>
-          <img [src]="defaultPic" alt="Reactor profile pic">
-        </ion-avatar>
         <h2 *ngIf="reactor?.firstName || reactor?.lastName">
           {{reactor.firstName}} {{reactor.lastName}}
         </h2>

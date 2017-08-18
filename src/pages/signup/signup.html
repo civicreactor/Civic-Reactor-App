@@ -30,6 +30,11 @@ required></ion-input>
         <ion-input type="password" [(ngModel)]="user.password"
 name="password" required></ion-input>
       </ion-item>
+<ion-item>
+        <ion-label floating>Profile Picture</ion-label>
+        <ion-input type="text" [(ngModel)]="user.profilePic" name="profilePic"
+required></ion-input>
+      </ion-item>
       <ion-item>
         <button color="primary" ion-button large block round
 (click)="signUp()" [disabled]="!signupForm.form.valid">Sign up</button>

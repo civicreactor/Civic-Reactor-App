@@ -85,5 +85,24 @@
         </ion-row>
       </ion-grid>
     </ion-item>
+
+    <ion-item (click)="updateImageURL()">
+      <ion-grid>
+        <ion-row>
+          <ion-col width-50>
+            Profile Pic
+          </ion-col>
+          <ion-col *ngIf="userProfile?.profilePic">
+            {{userProfile.profilePic}}
+          </ion-col>
+          <ion-col class="placeholder-profile" *ngIf="!userProfile?.profilePic">
+            <span>
+              Tap here to edit.
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
   </ion-list>
 </ion-content>
