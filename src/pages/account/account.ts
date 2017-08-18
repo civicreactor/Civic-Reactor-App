@@ -123,13 +123,39 @@ export class AccountPage {
         {
           text: 'Save',
           handler: data => {
-            this.userData.updatePasword(data.newPassword, data.oldPassword);
+            this.userData.updatePassword(data.newPassword, data.oldPassword);
           }
         }
       ]
     });
     alert.present();
   }
+
+  updateImageURL() {
+    let alert = this.alertCtrl.create({
+      message: "Your image URL",
+      inputs: [
+        {
+          name: 'profilePic',
+          placeholder: 'Your image URL',
+          value: this.userProfile.profilePic
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.userData.updateImageURL(data.profilePic);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 
   logoutUser() {
     this.authService.logOut();

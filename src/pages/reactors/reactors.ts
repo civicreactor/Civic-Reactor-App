@@ -15,7 +15,7 @@ export class ReactorsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userData: UserData) {
     this.reactors = userData.getUsers();
-    this.defaultPic = "http://wearesmile.com/assets/themes/s5/img/logo.png";
+    // this.defaultPic = "http://wearesmile.com/assets/themes/s5/img/logo.png";
   }
 
   ionViewDidLoad() {
