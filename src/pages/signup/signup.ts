@@ -48,6 +48,6 @@ export class SignupPage extends AbstractBasePage {
     }
 
     protected getErrorMessage(error: any): string {
-        return 'Failed to create your account.';
+        return 'Failed to create your account. ' + error;
     }
 }
