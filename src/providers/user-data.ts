@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { User } from '../model/User';
 import * as firebase from 'firebase';
 
 @Injectable()
@@ -71,6 +72,22 @@ export class UserData {
     updateImageURL(profilePic: string): firebase.Promise<any> {
         return this.userProfile.child(this.user.uid).update({
             profilePic: profilePic,
+        });
+    }
+
+    save(user:User): firebase.Promise<any> {
+        console.log('in saving the user')
+        console.log('user ', user)
+        console.log('user uid ', this.user.uid)
+        console.log('user role ', user.role)
+        return firebase.database().ref('/userProfile').child(this.user.uid).update({
+            role: user.role,
+            location: user.location,
+            skills: user.skills,
+            projects: user.projects,
+            githubAcc: user.githubAcc,
+            linkedinAcc: user.linkedinAcc,
+            twitterAcc: user.twitterAcc
         });
     }
 
