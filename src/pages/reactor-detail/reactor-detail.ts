@@ -15,7 +15,7 @@ export class ReactorDetailPage {
               public viewCtrl: ViewController) {
     this.user = this.navParams.data;
     this.edit = false;
-    this.loggedInUser = this.userData.user.uid;
+    this.loggedInUser = (this.userData.user)?this.userData.user.uid:"";
   }
 
   ionViewDidLoad() {
