@@ -10,10 +10,12 @@ import {User} from '../../model/User';
 export class ReactorDetailPage {
   user: any;
   edit: boolean = false;
+  loggedInUser: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public userData: UserData, 
               public viewCtrl: ViewController) {
     this.user = this.navParams.data;
     this.edit = false;
+    this.loggedInUser = this.userData.user.uid;
   }
 
   ionViewDidLoad() {
@@ -22,7 +24,6 @@ export class ReactorDetailPage {
 
   editProfile() {
     this.edit = true;
-    console.log('r uid ',this.user.uid)
   }
 
   save() {
