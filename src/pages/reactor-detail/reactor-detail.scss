@@ -1,3 +1,23 @@
 page-reactor-detail {
 
+    a {
+        color: #000;
+    }
+
+    ion-avatar img {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 140px !important;
+        max-height: 200px !important;
+    }
+
+    ion-icon {
+        font-size: 1.8em;
+    }
+
+    .item-ios h2 {
+        font-size: 2rem;
+    }
+    
+
 }

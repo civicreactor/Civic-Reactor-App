@@ -1,14 +1,98 @@
 <ion-header>
-
   <ion-navbar>
-     <ion-title>{{reactor.firstName}} {{reactor.lastName}}</ion-title> 
+     <ion-title>Profile</ion-title>
+     <ion-buttons end>
+      <button ion-button clear *ngIf="loggedInUser === user.$key" (click)="editProfile()">Edit</button>
+     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <ion-avatar>
-    <img [src]="">
-  </ion-avatar>
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col col-auto>
+        <ion-item no-lines>
+          <ion-avatar>
+            <img [src]="user.profilePic">
+          </ion-avatar>
+        </ion-item>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <form #userForm="ngForm">
+    <ion-list inset no-lines>  
+      <ion-item-divider color="light" *ngIf="edit==false">
+        <ion-label text-center text-wrap><h2>{{user.firstName}} {{user.lastName}}</h2></ion-label>
+      </ion-item-divider>
+      <ion-item *ngIf="edit==true">
+        <ion-label>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="user.firstName"  name="fName"></ion-input>
+        <ion-input type="text" [(ngModel)]="user.lastName"  name="lName"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label *ngIf="edit==true">Role</ion-label>
+          <ion-label text-center text-wrap *ngIf="edit==false">{{user.role}}</ion-label>
+          <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.role"  name="role"></ion-input>
+        </ion-item>
+      <ion-item>
+        <ion-label *ngIf="edit==true">Location</ion-label>
+        <ion-label text-center text-wrap *ngIf="edit==false">{{user.location}}</ion-label>
+        <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.location"  name="location"></ion-input>
+      </ion-item>
+      <ion-item-divider color="light" *ngIf="edit==false && user.skills">
+          <ion-label text-center *ngIf="edit==false">Skills</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label *ngIf="edit==true">Skills</ion-label>
+        <ion-label text-center text-wrap *ngIf="edit==false">{{user.skills}}</ion-label>
+        <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.skills"  name="skills"></ion-input>
+      </ion-item>
+      <ion-item-divider color="light" *ngIf="edit==false && user.projects">
+        <ion-label text-center *ngIf="edit==false">Projects</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label *ngIf="edit==true">Projects</ion-label>
+        <ion-label text-center text-wrap *ngIf="edit==false">{{user.projects}}</ion-label>
+        <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.projects"  name="projects"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="edit==false">
+        <ion-grid>
+          <ion-row>
+            <ion-col text-center><a *ngIf="edit==false && user.githubAcc" href="{{user.githubAcc}}"><ion-icon name="logo-github"></ion-icon></a></ion-col>
+            <ion-col text-center><a *ngIf="edit==false && user.linkedinAcc" href="{{user.linkedinAcc}}"><ion-icon name="logo-linkedin"></ion-icon></a></ion-col>
+            <ion-col text-center><a *ngIf="edit==false && user.twitterAcc" href="{{user.twitterAcc}}"><ion-icon name="logo-twitter"></ion-icon></a></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-label *ngIf="edit==true">Github</ion-label>
+        <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.githubAcc"  name="githubAcc"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label *ngIf="edit==true">LinkedIn</ion-label>
+        <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.linkedinAcc"  name="linkedinAcc"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label *ngIf="edit==true">Twitter</ion-label>
+        <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.twitterAcc"  name="twitterAcc"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col col-auto><button ion-button small *ngIf="edit==true" (click)="cancel()">Cancel</button></ion-col>
+        <ion-col col-auto><button ion-button small *ngIf="edit==true" (click)="save(user)">Save</button></ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- <ion-list inset no-lines>
+      <ion-buttons>
+        <button ion-button small *ngIf="edit==true" (click)="cancel()">Cancel</button>
+        <button ion-button small *ngIf="edit==true" (click)="save(user)">Save</button>
+      </ion-buttons>
+    </ion-list> -->
+  </form>
 </ion-content>
