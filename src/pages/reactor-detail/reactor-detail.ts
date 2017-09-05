@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
-import {User} from '../../model/User';
+import {User} from '../../model/user';
 
 @Component({
   selector: 'page-reactor-detail',
