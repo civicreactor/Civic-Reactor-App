@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { User } from '../model/User';
+import { User } from '../model/user';
 import * as firebase from 'firebase';
 
 @Injectable()
@@ -77,7 +77,7 @@ export class UserData {
 
     save(user:User): firebase.Promise<any> {
         console.log('in saving the user')
-        console.log('user ', user)
+        console.log('user ', this.user)
         console.log('user uid ', this.user.uid)
         console.log('user role ', user.role)
         return firebase.database().ref('/userProfile').child(this.user.uid).update({
