@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { CivicReactorApp } from './app.component';
 import { API_FIREBASE_KEY } from './mock-api';
 import { AngularFireModule, AuthMethods, AuthProviders } from 'angularfire2';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
@@ -84,6 +85,7 @@ export const cloudSettings: CloudSettings = {
   ],
   providers: [
     AuthService,
+    Geolocation,
     ProjectData,
     SplashScreen,
     UserData,
