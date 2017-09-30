@@ -8,6 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
+import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { ProjectFilterPage } from '../pages/project-filter/project-filter';
@@ -52,6 +53,7 @@ export const cloudSettings: CloudSettings = {
     CivicReactorApp,
     AboutPage,
     AccountPage,
+    HomePage,
     LoginPage,
     MapPage,
     ProjectDetailPage,
@@ -74,6 +76,7 @@ export const cloudSettings: CloudSettings = {
     AboutPage,
     AccountPage,
     LoginPage,
+    HomePage,
     MapPage,
     ProjectDetailPage,
     ProjectFilterPage,
