@@ -1,13 +1,10 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
-
 import {Deploy} from '@ionic/cloud-angular';
-
-
 import { MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
+import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { ProjectListPage } from '../pages/project-list/project-list';
@@ -50,7 +47,7 @@ export class CivicReactorApp {
     { title: 'Signup', component: SignupPage, icon: 'person-add' }
   ]
 
-  rootPage:any = TabsPage;
+  rootPage: any = HomePage;
   zone: NgZone;
 
   constructor(
@@ -91,7 +88,8 @@ export class CivicReactorApp {
     if (page.logsOut === true) {
       setTimeout(() => {;
         this.authService.logOut();
-      }, 1000);
+        this.nav.setRoot(HomePage);
+      }, 500);
     }
   }
 
