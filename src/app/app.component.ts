@@ -7,6 +7,7 @@ import { AccountPage } from '../pages/account/account';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
+import { BlogPage } from '../pages/blog/blog';
 import { ProjectListPage } from '../pages/project-list/project-list';
 import { ReactorsPage } from '../pages/reactors/reactors';
 import { SignupPage } from '../pages/signup/signup'
@@ -36,7 +37,8 @@ export class CivicReactorApp {
     { title: 'Reactors', component: TabsPage, tabComponent: ReactorsPage, icon: 'contacts' },
     { title: 'Projects', component: TabsPage, tabComponent: ProjectListPage, index: 1, icon: 'filing' },
     { title: 'Map', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map'},
-    { title: 'About', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
+    { title: 'Blog', component: TabsPage, tabComponent: BlogPage, index: 3, icon: 'book'},
+    { title: 'About', component: TabsPage, tabComponent: AboutPage, index: 4, icon: 'information-circle' }
   ]
   loggedInPages: PagesInterface[] = [
     { title: 'Account', component: AccountPage, icon: 'person' },
@@ -66,7 +68,7 @@ export class CivicReactorApp {
         } else {
           this.enableMenu(false);
         }
-      });     
+      });
     });
 
   }
