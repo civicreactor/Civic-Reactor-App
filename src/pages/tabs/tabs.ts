@@ -14,8 +14,8 @@ export class TabsPage {
   tab1Root: any = ReactorsPage;
   tab2Root: any = ProjectListPage;
   tab3Root: any = MapPage;
-  tab4Root: any = BlogPage;
-  tab5Root: any = AboutPage;
+  tab5Root: any = BlogPage;
+  tab4Root: any = AboutPage;
   mySelectedIndex: number;
 
   constructor(navParams: NavParams) {
