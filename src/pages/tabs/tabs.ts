@@ -3,6 +3,7 @@ import { NavParams } from 'ionic-angular';
 
 import { AboutPage } from '../about/about';
 import { MapPage } from '../map/map';
+import { BlogPage } from '../blog/blog';
 import { ProjectListPage } from '../project-list/project-list';
 import { ReactorsPage } from '../reactors/reactors';
 
@@ -10,9 +11,10 @@ import { ReactorsPage } from '../reactors/reactors';
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-  tab1Root: any = ReactorsPage;  
+  tab1Root: any = ReactorsPage;
   tab2Root: any = ProjectListPage;
   tab3Root: any = MapPage;
+  tab5Root: any = BlogPage;
   tab4Root: any = AboutPage;
   mySelectedIndex: number;
 
