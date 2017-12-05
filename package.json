@@ -13,6 +13,7 @@
     "test": "ng test"
   },
   "dependencies": {
+    "node-sass": "4.5.3",
     "@angular/common": "2.4.8",
     "@angular/compiler": "2.4.8",
     "@angular/compiler-cli": "2.4.8",
