@@ -5,7 +5,6 @@ import { Http } from '@angular/http';
 @Injectable()
 export class GithubService {
   constructor(private http:Http) {
-    this.http.get("https://api.github.com/repos/civicreactor/Civic-Reactor-App/contributors").subscribe(response => this.contributors = response.json());
     this.http.get("https://api.github.com/users/civicreactor/repos").subscribe(response => {
         this.doProced(response.json());
       }
