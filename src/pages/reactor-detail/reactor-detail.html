@@ -23,7 +23,7 @@
   </ion-grid>
 
   <form #userForm="ngForm">
-    <ion-list inset no-lines>  
+    <ion-list inset no-lines>
       <ion-item-divider color="light" *ngIf="edit==false">
         <ion-label text-center text-wrap><h2>{{user.firstName}} {{user.lastName}}</h2></ion-label>
       </ion-item-divider>
@@ -42,7 +42,7 @@
         <ion-label text-center text-wrap *ngIf="edit==false">{{user.location}}</ion-label>
         <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.location"  name="location"></ion-input>
       </ion-item>
-      <ion-item-divider color="light" *ngIf="edit==false && user.skills">
+      <ion-item-divider color="light" *ngIf="edit==false">
           <ion-label text-center *ngIf="edit==false">Skills</ion-label>
       </ion-item-divider>
       <ion-item>
@@ -50,14 +50,22 @@
         <ion-label text-center text-wrap *ngIf="edit==false">{{user.skills}}</ion-label>
         <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.skills"  name="skills"></ion-input>
       </ion-item>
-      <ion-item-divider color="light" *ngIf="edit==false && user.projects">
-        <ion-label text-center *ngIf="edit==false">Projects</ion-label>
+
+      <ion-item-divider color="light" *ngIf="edit==false ">
+        <ion-label text-center *ngIf="edit==false" (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}">Projects</ion-label>
       </ion-item-divider>
       <ion-item>
+
         <ion-label *ngIf="edit==true">Projects</ion-label>
-        <ion-label text-center text-wrap *ngIf="edit==false">{{user.projects}}</ion-label>
-        <ion-input type="text" *ngIf="edit==true" [(ngModel)]="user.projects"  name="projects"></ion-input>
+        <div *ngIf="isGroupShown(i)" class="text-center">
+          <div *ngFor="let row of resultado.data" >
+            <ul *ngFor="let col of row.colaboradores" >
+              <li  *ngIf="col.html_url === user.githubAcc"> <span *ngIf="col.html_url === user.githubAcc">{{row.name}}</span> Contributions {{col.contributions}} </li>
+            </ul>
+          </div>
+        </div>
       </ion-item>
+
       <ion-item *ngIf="edit==false">
         <ion-grid>
           <ion-row>
@@ -95,4 +103,8 @@
       </ion-buttons>
     </ion-list> -->
   </form>
-</ion-content>
+ </ion-content>
+
+
+
+

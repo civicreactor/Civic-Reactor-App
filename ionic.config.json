@@ -1,5 +1,8 @@
 {
   "name": "Civic-Reactor-App",
   "app_id": "46aba71e",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

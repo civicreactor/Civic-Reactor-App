@@ -5,12 +5,15 @@ import { ProjectData } from '../../providers/project-data';
 import { ProjectFilterPage } from '../project-filter/project-filter';
 import { ProjectDetailPage } from '../project-detail/project-detail';
 import * as firebase from 'firebase';
+import {GithubService} from "../../services/GithubService";
+
 
 @Component({
   selector: 'page-project-list',
-  templateUrl: 'project-list.html'
+  templateUrl: 'project-list.html',
+  providers:[GithubService]
 })
-export class ProjectListPage {
+export class ProjectListPage{
   @ViewChild('projectList', { read: List }) projectList: List;
 
   projects:firebase.database.Reference;
@@ -26,24 +29,32 @@ export class ProjectListPage {
   projectDir: Array<any>;
   loadedProjectDir: Array<any>;
   loadedProjectFavsDir: Array<any>;
+  shownGroup = null;
+
+  resultado;
 
 
-  constructor(public af: AngularFire, 
-              public alertCtrl: AlertController, 
-              public modalCtrl: ModalController, 
-              public navCtrl: NavController, 
-              public projectData: ProjectData) {
+  constructor(public af: AngularFire,
+              public alertCtrl: AlertController,
+              public modalCtrl: ModalController,
+              public navCtrl: NavController,
+              public projectData: ProjectData,
+              public githubService:GithubService) {
+
+    this.resultado = githubService.getData();
+
+
     this.zone = new NgZone({});
     af.auth.subscribe((user) => {
         this.zone.run(() => {
             if (user) {
                 this.currentUser = user.uid;
             }
-        });     
+        });
     });
     this.segment = 'all';
     this.queryText = '';
-    
+
     this.projectRef = firebase.database().ref('/projects');
     this.projectRef.on('value', projectDir => {
       let projects = [];
@@ -66,7 +77,7 @@ export class ProjectListPage {
   }
 
   getItems(searchbar) {
-    
+
     this.initializeItems();
     this.searchbar = searchbar.srcElement;
 
@@ -182,5 +193,16 @@ export class ProjectListPage {
     this.projectList && this.projectList.closeSlidingItems();
   }
 
-  
+  toggleGroup(group) {
+    if (this.isGroupShown(group)) {
+      this.shownGroup = null;
+    } else {
+      this.shownGroup = group;
+    }
+  };
+
+  isGroupShown(group) {
+    return this.shownGroup === group;
+  };
+
 }

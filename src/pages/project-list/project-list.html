@@ -27,7 +27,7 @@
 </ion-header>
 
 <ion-content class="outer-content project-list">
-  <ion-card #cardProject class="project-card" *ngFor="let project of projectDir">
+  <ion-card #cardProject class="project-card" *ngFor="let project of resultado.data">
     <ion-card-header>
       <button ion-item detail-none (click)="goToProjectDetail(project)">
         <ion-thumbnail item-left>
@@ -35,7 +35,10 @@
         </ion-thumbnail>
         <h2>{{project.title}}</h2>
         <br>
-        <h4>{{project.tech}}</h4>
+        <h4>Project : {{project.name}}</h4>
+      <ul *ngFor="let col of project.colaboradores" >
+        <li> User:{{col.login}}  Total :{{col.contributions}}  </li>
+      </ul>
       </button>
     </ion-card-header>
 
@@ -67,3 +70,8 @@
     </ion-row>
   </ion-card>
 </ion-content>
+
+
+<!--<ul *ngFor="let col of row.colaboradores" >-->
+  <!--<li  *ngIf="col.html_url === user.githubAcc"> <span *ngIf="col.html_url === user.githubAcc">{{row.name}}</span> Contributions {{col.contributions}} </li>-->
+<!--</ul>-->
