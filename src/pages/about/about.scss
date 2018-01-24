@@ -1,12 +1,14 @@
 page-about {
-  $bg-color: #F6E0C4;
+  background: color($colors, femibg, base);
   .mainTitle{
     font-size: large;
-    text-decoration-color: #002040;
+    
     text-align: center;
   }
   p {
+    
     text-align: justify;
+  
     margin: 14px 20px;
   }
 }

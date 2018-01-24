@@ -7,14 +7,14 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="outer-content">
-  <ion-card class="reactor-card" *ngFor="let reactor of reactors | async">
+<ion-content color="femibg" class="outer-content">
+  <ion-card class="reactor-card" color="femibg" *ngFor="let reactor of reactors | async">
     <ion-card-header>
-      <button ion-item detail-none (click)="goToReactorDetail(reactor)">
+      <button color="femibg" ion-item detail-none (click)="goToReactorDetail(reactor)">
         <ion-avatar *ngIf="reactor.profilePic" item-left>
           <img [src]="reactor.profilePic" alt="Reactor profile pic">
         </ion-avatar>
-        <h2 *ngIf="reactor?.firstName || reactor?.lastName">
+        <h2 color="femi2" *ngIf="reactor?.firstName || reactor?.lastName">
           {{reactor.firstName}} {{reactor.lastName}}
         </h2>
       </button>
